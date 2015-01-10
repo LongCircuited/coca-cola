@@ -42,7 +42,6 @@ Enemy.prototype.update = function() {
 }
 
 
-}
 
 
 module.exports = exports = Enemy;

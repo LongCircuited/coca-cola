@@ -2,13 +2,20 @@
   "name": "coca-cola",
   "version": "0.0.0",
   "description": "Coca Cola powered pokemon-like game. Doesn't infringe any trademarks.",
-  "main": "index.js",
+  "main": "app.js",
+  "dependencies": {
+    "grunt": "~0.4.5",
+    "grunt-browserify": "~3.2.1"
+  },
+  "devDependencies": {
+    "grunt-contrib-watch": "~0.6.1"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/LongCircuited/coca-cola.git"
+    "url": "https://github.com/LongCircuited/coca-cola.git"
   },
   "keywords": [
     "game",

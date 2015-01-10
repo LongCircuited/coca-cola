@@ -1,4 +1,7 @@
+var IMAGE_PATHS = [ 'images/dirt.png', 'images/grass.png' ];
+
 var thomas = require('thomas');
+var resourceUtil = require('./util/resource');
 
 function CocaCola(display)
 {
@@ -10,7 +13,14 @@ CocaCola.prototype = Object.create(thomas.Game.prototype);
 
 CocaCola.prototype.start = function ()
 {
-  this.loop.start();
+  resourceUtil.loadImages(
+    IMAGE_PATHS,
+    function (images)
+    {
+      this.images = images;
+      this.loop.start();
+    }.bind(this)
+  );
 }
 
 CocaCola.prototype.begin = function ()

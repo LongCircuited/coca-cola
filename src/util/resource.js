@@ -6,7 +6,7 @@ exports.loadImage = function(path, callback) {
     img.src = path;
 };
 
-exports.prototype.loadImages = function(paths, callback) {
+exports.loadImages = function(paths, callback) {
     var count = paths.length;
     var images = {};
 
@@ -15,7 +15,7 @@ exports.prototype.loadImages = function(paths, callback) {
         var name = paths[i].split(".")[0];
         images[name] = new Image();
         //images[name].crossOrigin="anonymous";
-        images[name].onload = function() { if(--count == 0) { callback(images); log("Asset Load Completed: " + paths.length + " File(s)." + console.s + images[name].src); } };
+        images[name].onload = function() { if(--count == 0) { callback(images); } };
         images[name].src = path;
     }
 }

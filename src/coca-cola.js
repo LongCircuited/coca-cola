@@ -13,7 +13,6 @@ function CocaCola(display)
 
 CocaCola.prototype = Object.create(thomas.Game.prototype);
 
-
 CocaCola.prototype.start = function ()
 {
   resourceUtil.loadImages(

@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/LongCircuited/coca-cola/issues"
   },
-  "homepage": "https://github.com/LongCircuited/coca-cola"
+  "homepage": "https://github.com/LongCircuited/coca-cola",
+  "dependencies": {
+    "thomas": "^0.1.0"
+  }
 }

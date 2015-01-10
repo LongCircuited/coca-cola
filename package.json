@@ -13,7 +13,7 @@
   },
   "scripts": {
     "test": "http-server public/",
-    "build": "grunt watch"
+    "build": "grunt browserify && grunt watch"
   },
   "repository": {
     "type": "git",

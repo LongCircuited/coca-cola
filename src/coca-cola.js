@@ -1,5 +1,7 @@
 var thomas = require('thomas');
 
+var tile = require('./tile');
+
 function CocaCola(display)
 {
   this.display = display;
@@ -7,6 +9,7 @@ function CocaCola(display)
 }
 
 CocaCola.prototype = Object.create(thomas.Game.prototype);
+
 
 CocaCola.prototype.start = function ()
 {

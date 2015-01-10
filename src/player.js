@@ -16,16 +16,19 @@ Player.prototype.render = function(display) {
 	display.drawImage(this.image, this.x, this.y, this.WIDTH, this.HEIGHT);
 }
 
+var ls = null;
+
 Player.prototype.move = function(dir, world, del) {
-  var dx = Math.round(5 * del);
-  var dy =  Math.round(5 * del);
-  var nX = this.x;
+
+  var dx = 5 / (del);
+  var dy =  5 / (del);
+   var nX = this.x;
   var nY = this.y;
 
   if      (87 in dir) nY-=dy; 
-  else if (83 in dir) nY+=dy; 
-  if      (65 in dir) nX-=dx; 
-  else if (68 in dir) nX+=dx; 
+   else if (83 in dir) nY+=dy; 
+   if      (65 in dir) nX-=dx; 
+   else if (68 in dir) nX+=dx; 
   if(this.checkMove(nX, nY, world)) {
      this.x = nX; 
      this.y = nY; 
@@ -36,9 +39,9 @@ Player.prototype.checkMove = function(x11, y11, world) {
 	  var collision = true;
 	  	var x0 = x11 - (64 >> 1);
         var x1 = x0 + 64;
-        var y0 = y11 - (64 >> 1);
-        var y1 = y0 + 64;
-       
+        var y0 = y11 + 32 - (64 >> 1);
+        var y1 = y0 + 32;
+       console.log(y0, y1);
         for (var y = y0; y < y1; y++) {
                 for (var x = x0; x < x1; x++) {
                         if (world.getTile(Math.round(x / 64), Math.round(y / 64)).type == 1) collision = false;

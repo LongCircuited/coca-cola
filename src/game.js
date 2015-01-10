@@ -23,7 +23,7 @@ function Game(display)
   this.display.width = 1000;
   this.display.height = 1000;
   this.context = display.getContext("2d");
-  this.loop = new thomas.Loop(this.callUpdate.bind(this), this.callRender.bind(this), { updatesPerSecond: 60 });
+  this.loop = new thomas.Loop(this.callUpdate.bind(this), this.callRender.bind(this), { updatesPerSecond: 30 });
 
 
 	window.addEventListener("keydown", keyDown, false);
@@ -76,7 +76,7 @@ Game.prototype.update = function (d)
 
 }
 
-Game.prototype.render = function ()
+Game.prototype.render = function (d)
 {
 	this.context.clearRect(0,0,this.display.width, this.display.height);
 	world.render(this.context);

@@ -1,6 +1,6 @@
-var CocaCola = require('./src/coca-cola');
+var Game = require('./src/game');
 var canvas = document.getElementById('display');
 
-var cocaCola = new CocaCola(canvas);
-cocaCola.start();
+var cocaCola = new Game(canvas);
+game.start();
 

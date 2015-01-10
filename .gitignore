@@ -28,4 +28,4 @@ node_modules
 .lock-wscript
 
 # Built Files
-public/coca-cola.js
+public/game.js

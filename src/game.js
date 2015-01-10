@@ -51,7 +51,7 @@ Game.prototype.start = function ()
     function (images)
     {
       this.images = images;
-	  world.init(images);
+	    world.init(images);
       ployer = new player(0,0, this.images['images/ba']);
       onemy = new enemy(320,0,this.images['images/ein']);
       this.loop.start();
@@ -66,12 +66,12 @@ Game.prototype.begin = function ()
 
 }
 
-Game.prototype.update = function ()
+Game.prototype.update = function (d)
 {
 
-  onemy.update(-1,1);
-  //ployer.update(1,1);
-
+  // onemy.update(-1,1);
+  // //ployer.update(1,1);
+  ployer.move(keys, world, d);
 
 
 }
@@ -83,7 +83,7 @@ Game.prototype.render = function ()
 	ployer.render(this.context);
   onemy.render(this.context);
 
-  ployer.move(keys, world.tiles, world);
+
 }
 
 

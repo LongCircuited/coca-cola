@@ -3,8 +3,8 @@ var thomas = require("thomas");
 function Player(x, y, image) {
 	this.x = x;
 	this.y = y;
-	this.WIDTH = 52;
-	this.HEIGHT = 52;
+	this.WIDTH = 64;
+	this.HEIGHT = 64;
 
 	this.rect = new thomas.Rectangle(this.x, this.y, this.WIDTH, this.HEIGHT);
 
@@ -16,28 +16,51 @@ Player.prototype.render = function(display) {
 	display.drawImage(this.image, this.x, this.y, this.WIDTH, this.HEIGHT);
 }
 
-Player.prototype.move = function(dir, tiles, world) {
-	
-	var mX = 0, mY = 0;
-	if(37 in dir) { 
-		mX += -5; 
-	} else if(39 in dir) { 
-		mX = 5;
-	};
-	if(38 in dir) { 
-		mY = -5; 
-	} else if(40 in dir) { 
-		mY = 5;
-	};
-	var movementRect = new thomas.Rectangle(this.x + mX, this.y + mY, this.WIDTH, this.HEIGHT);
-	var nextTile = tiles[Math.floor((this.x + mX) / 64) * world.DIMENSIONS + Math.floor((this.y + mY) / 64)];
-var nextTile1 = tiles[Math.ceil((this.x + mX) / 64) * world.DIMENSIONS + Math.floor((this.y + mY) / 64)];
-var nextTile2 = tiles[Math.floor((this.x + mX) / 64) * world.DIMENSIONS + Math.ceil((this.y + mY) / 64)];
-var nextTile3 = tiles[Math.ceil((this.x + mX) / 64) * world.DIMENSIONS + Math.ceil((this.y + mY) / 64)];
-	if(!movementRect.intersects(nextTile.rect) == true && !nextTile.type == 1 && !nextTile1.type == 1 && !nextTile2.type == 1 && !nextTile3.type == 1) {
-		this.x += mX;
-		this.y += mY;
-	}
+Player.prototype.move = function(dir, world, del) {
+  var dx = Math.round(2 * del);
+  var dy =  Math.round(2 * del);
+  var nX = this.x;
+  var nY = this.y;
+
+  if      (87 in dir) nY-=dy; 
+  else if (83 in dir) nY+=dy; 
+  if      (65 in dir) nX-=dx; 
+  else if (68 in dir) nX+=dx; 
+  if(this.checkMove(nX, nY, world)) {
+     this.x = nX; 
+     this.y = nY; 
+  }
+}
+
+Player.prototype.checkMove = function(x11, y11, world) {
+	  var collision = true;
+	  	var x0 = x11 - (64 >> 1);
+        var x1 = x0 + 64;
+        var y0 = y11 - (64 >> 1);
+        var y1 = y0 + 64;
+       
+        for (var y = y0; y < y1; y++) {
+                for (var x = x0; x < x1; x++) {
+                        if (world.getTile(Math.round(x / 64), Math.round(y / 64)).type == 1) collision = false;
+                }
+        }
+
+return collision;
+	// var tX = Math.floor(x1 / world.TILE_WIDTH);
+	// var tY = Math.floor(x1 / world.TILE_HEIGHT);
+	// var tile1 = world.getTile(tX, tY);
+	// if(tile1.type == 1) return false
+	// tX = Math.floor((x1 + world.TILE_WIDTH) / world.TILE_WIDTH);
+	// tY = Math.floor((y1 + world.TILE_HEIGHT) / world.TILE_HEIGHT);
+	// tile1 = world.getTile(tX, tY);
+	// if(tile1.type == 1) return false
+	// return true;
+
+	// if(level[Math.floor(x/20)][Math.floor(y/20)] == 1 || level[Math.ceil(x/20)][Math.floor(y/20)] == 1 || level[Math.floor(x/20)][Math.ceil(y/20)] == 1 || level[Math.ceil(x/20)][Math.ceil(y/20)] == 1) {
+	// 	return false;
+	// } else {
+	// 	return true;
+	// }
 }
 
 Player.prototype.update = function(x, y) {

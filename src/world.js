@@ -33,6 +33,10 @@ World.prototype.init = function(images) {
 	}
 }
 
+World.prototype.getTile = function(x, y) {
+	return this.tiles[x * this.DIMENSIONS + y];
+}
+
 World.prototype.render = function(display) {
 	// Slam the tiles onto the screen
 	for(var x = 0; x < this.map.length; x++) {

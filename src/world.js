@@ -16,11 +16,11 @@ function World() {
 	this.tiles = [this.DIMENSIONS];
 }
 
-World.prototype.init = function() {
+World.prototype.init = function(images) {
 	// Fill array with tiles from the map array
 	for(var x = 0; x < this.DIMENSIONS; x++) {
 		for(var y = 0; y < this.DIMENSIONS; y++) {
-			this.tiles[x * (this.DIMENSIONS) + y] = new tile(x * this.TILE_WIDTH, y * this.TILE_HEIGHT, this.TILE_WIDTH, this.TILE_HEIGHT);
+			this.tiles[x * (this.DIMENSIONS) + y] = new tile(x * this.TILE_WIDTH, y * this.TILE_HEIGHT, this.TILE_WIDTH, this.TILE_HEIGHT, images['images/grass']);
 		}
 	}
 }

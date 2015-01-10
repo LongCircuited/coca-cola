@@ -1,6 +1,6 @@
 var thomas = require("thomas");
 
-function Player(x, y) {
+function Player(x, y, image) {
 	this.x = x;
 	this.y = y;
 	this.WIDTH = 64;
@@ -8,8 +8,8 @@ function Player(x, y) {
 
 	this.rect = new thomas.Rectangle(this.x, this.y, this.WIDTH, this.HEIGHT);
 
-	this.image = new Image();
-	this.image.src = "http://upload.wikimedia.org/wikipedia/commons/f/f3/Nicolas_Cage_-_66%C3%A8me_Festival_de_Venise_(Mostra).jpg";
+	this.image = image;
+	
 }
 
 Player.prototype.render = function(display) {

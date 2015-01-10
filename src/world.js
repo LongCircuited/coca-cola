@@ -10,6 +10,13 @@ function World() {
 				[0,0,0,0,0,0,0]
 	];
 
+
+	for(var x = 0; x < 100; x++) {
+		for(var y = 0; y < 100; y++) {
+			this.map[x][y] = 0;
+		}
+	}
+	
  	this.WIDTH = this.map.length;
  	this.HEIGHT = this.map.length;
  	this.DIMENSIONS = this.WIDTH * this.HEIGHT;

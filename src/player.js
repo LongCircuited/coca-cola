@@ -17,8 +17,8 @@ Player.prototype.render = function(display) {
 }
 
 Player.prototype.move = function(dir, world, del) {
-  var dx = Math.round(2 * del);
-  var dy =  Math.round(2 * del);
+  var dx = Math.round(5 * del);
+  var dy =  Math.round(5 * del);
   var nX = this.x;
   var nY = this.y;
 

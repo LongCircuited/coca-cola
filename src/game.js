@@ -1,4 +1,4 @@
-var IMAGE_PATHS = [ 'images/dirt.png', 'images/grass.png' ,'images/players.png','images/longgrass.png'];
+var IMAGE_PATHS = [ 'images/dirt.png', 'images/grass.png' ,'images/ein.png','images/longgrass.png','images/ba.png'];
 
 var thomas = require('thomas');
 
@@ -23,7 +23,7 @@ function Game(display)
   this.display.width = 1000;
   this.display.height = 1000;
   this.context = display.getContext("2d");
-  this.loop = new thomas.Loop(this.callUpdate.bind(this), this.callRender.bind(this));
+  this.loop = new thomas.Loop(this.callUpdate.bind(this), this.callRender.bind(this), { updatesPerSecond: 60 });
 
 
 	window.addEventListener("keydown", keyDown, false);
@@ -52,8 +52,8 @@ Game.prototype.start = function ()
     {
       this.images = images;
 	  world.init(images);
-      ployer = new player(0,0, this.images['images/dirt']);
-      onemy = new enemy(320,0,this.images['images/longgrass']);
+      ployer = new player(0,0, this.images['images/ba']);
+      onemy = new enemy(320,0,this.images['images/ein']);
       this.loop.start();
     }.bind(this)
   );
@@ -68,6 +68,9 @@ Game.prototype.begin = function ()
 
 Game.prototype.update = function ()
 {
+  onemy.update(-1,1);
+  ployer.update(1,1);
+
 
 }
 
@@ -78,8 +81,6 @@ Game.prototype.render = function ()
 	ployer.render(this.context);
   onemy.render(this.context);
 
-  onemy.update(-1,-1)
-	ployer.update(1,1);
 
 }
 

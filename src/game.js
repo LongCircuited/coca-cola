@@ -42,7 +42,7 @@ Game.prototype = Object.create(thomas.Game.prototype);
 Game.prototype.start = function ()
 {
 
-  this.display.imageSmoothingEnabled = false;
+  this.context.imageSmoothingEnabled = false;
 
   resourceUtil.loadImages(
     IMAGE_PATHS,
@@ -74,8 +74,7 @@ Game.prototype.render = function ()
 	world.render(this.context);
 	ployer.render(this.context);
 
-	ployer.update(1,1);
-
+  ployer.move(keys, world.tiles, world);
 }
 
 

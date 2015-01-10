@@ -3,7 +3,7 @@ var tile = require("./tile");
 function World() {
 	this.map = [[0,0,0,0,0,0,0],
 				[0,0,0,0,0,0,0],
-				[0,0,0,0,0,0,0],
+				[0,0,0,1,0,0,0],
 				[0,0,0,0,0,0,0],
 				[0,0,0,0,0,0,0]
 	];
@@ -18,9 +18,15 @@ function World() {
 
 World.prototype.init = function(images) {
 	// Fill array with tiles from the map array
-	for(var x = 0; x < this.DIMENSIONS; x++) {
-		for(var y = 0; y < this.DIMENSIONS; y++) {
-			this.tiles[x * (this.DIMENSIONS) + y] = new tile(x * this.TILE_WIDTH, y * this.TILE_HEIGHT, this.TILE_WIDTH, this.TILE_HEIGHT, images['images/grass']);
+	for(var x = 0; x < this.WIDTH; x++) {
+		for(var y = 0; y < this.WIDTH; y++) {
+			if(this.map[x][y] == 1) {
+				this.tiles[x * (this.DIMENSIONS) + y] = new tile(x * this.TILE_WIDTH, y * this.TILE_HEIGHT, this.TILE_WIDTH, this.TILE_HEIGHT, images['images/dirt']);
+				this.tiles[x * (this.DIMENSIONS) + y].type = 1;	
+			} else {
+				this.tiles[x * (this.DIMENSIONS) + y] = new tile(x * this.TILE_WIDTH, y * this.TILE_HEIGHT, this.TILE_WIDTH, this.TILE_HEIGHT, images['images/grass']);	
+				this.tiles[x * (this.DIMENSIONS) + y].type = 0;
+			}
 		}
 	}
 }

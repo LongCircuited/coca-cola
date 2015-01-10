@@ -6,6 +6,7 @@ function Tile(x, y, w, h,image) {
 	this.w = w;
 	this.h = h;
 	this.image = image;
+	this.type = 0;
 	//this.image.src = "http://the-shame.co.uk/wp-content/uploads/2013/05/Ainsley+Harriott.jpeg";
 	this.rect = new thomas.Rectangle(this.x, this.y, this.w, this.h);
 }

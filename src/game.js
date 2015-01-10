@@ -68,8 +68,13 @@ Game.prototype.begin = function ()
 
 Game.prototype.update = function ()
 {
+<<<<<<< Updated upstream
   onemy.update(-1,1);
   //ployer.update(1,1);
+=======
+  onemy.update();
+  ployer.update(1,1);
+>>>>>>> Stashed changes
 
 
 }

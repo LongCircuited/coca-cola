@@ -1,5 +1,9 @@
 var thomas = require("thomas");
 
+function getRandomArbitrary(min, max) {
+    return Math.random() * (max - min) + min;
+}
+
 function Enemy(x, y, image) {
 	this.x = x;
 	this.y = y;
@@ -15,9 +19,13 @@ Enemy.prototype.render = function(display) {
 }
 
 
-Enemy.prototype.update = function(x, y) {
-	this.x += x;
-	this.y += y;
+Enemy.prototype.update = function() {
+
+	for (i = 0; i < 100; i++) { 
+	this.x += getRandomArbitrary(-5, 5);
+	this.y += getRandomArbitrary(-5, 5);
+}
+
 
 }
 

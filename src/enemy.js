@@ -9,6 +9,8 @@ function Enemy(x, y, image) {
 	this.y = y;
 	this.WIDTH = 64;
 	this.HEIGHT = 64;
+	this.foot = 0
+
 
 	this.rect = new thomas.Rectangle(this.x, this.y, this.WIDTH, this.HEIGHT);
 	this.image = image;
@@ -21,9 +23,22 @@ Enemy.prototype.render = function(display) {
 
 Enemy.prototype.update = function() {
 
-	for (i = 0; i < 100; i++) { 
-	this.x += getRandomArbitrary(-5, 5);
-	this.y += getRandomArbitrary(-5, 5);
+	if (this.foot ===0){
+		this.y +=1
+		//sets picture to ein.png
+	}
+
+	else if (this.foot ===1){
+		this.y +=1
+		//sets picture to ein1.png
+	}
+
+	else if (this.foot ===2){
+		this.y +=1
+		//sets picture to ein3.png
+	}
+	this.foot +=1
+	
 }
 
 

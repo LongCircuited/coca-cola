@@ -1,4 +1,4 @@
-var IMAGE_PATHS = [ 'images/dirt.png', 'images/grass.png' ,'images/ein.png','images/longgrass.png','images/ba.png'];
+var IMAGE_PATHS = [ 'images/dirt.png', 'images/grass.png' ,'images/ein.png','images/longgrass.png','images/ba.png','images/ein2.png','images/ein3.png'];
 
 var thomas = require('thomas');
 

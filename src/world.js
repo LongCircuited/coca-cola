@@ -28,12 +28,12 @@ World.prototype.init = function(images) {
 World.prototype.render = function(display) {
 	// Slam the tiles onto the screen
 	for(var x = 0; x < this.map.length; x++) {
-		for(var y = 0; y < this.map.length; y++) {
+		for(var y = 0; y < this.map[x].length; y++) {
 			var tile = this.tiles[x * (this.DIMENSIONS) + y];
 			tile.render(display);
 		}
 	}
-} 
+}
 
 
 module.exports = exports = World;

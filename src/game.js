@@ -15,7 +15,7 @@ var ployer;
 
 var keys = {};
 
-function CocaCola(display)
+function Game(display)
 {
   this.display = display;
   this.display.width = 1000;
@@ -37,9 +37,9 @@ function keyUp(e) {
 }
 
 
-CocaCola.prototype = Object.create(thomas.Game.prototype);
+Game.prototype = Object.create(thomas.Game.prototype);
 
-CocaCola.prototype.start = function ()
+Game.prototype.start = function ()
 {
 
   this.display.imageSmoothingEnabled = false;
@@ -57,24 +57,26 @@ CocaCola.prototype.start = function ()
 
 }
 
-CocaCola.prototype.begin = function ()
+Game.prototype.begin = function ()
 {
 
-  
+
 }
 
-CocaCola.prototype.update = function ()
+Game.prototype.update = function ()
 {
-  
+
 }
 
-CocaCola.prototype.render = function ()
+Game.prototype.render = function ()
 {
 	this.context.clearRect(0,0,this.display.width, this.display.height);
 	world.render(this.context);
 	ployer.render(this.context);
- 
+
+	ployer.update(1,1);
+
 }
 
 
-module.exports = exports = CocaCola;
+module.exports = exports = Game;

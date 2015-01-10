@@ -8,7 +8,7 @@ module.exports = function(grunt) {
     browserify: {
       dist: {
         files: {
-          './public/coca-cola.js': ['./index.js'],
+          './public/game.js': ['./index.js'],
         }
       }
     }

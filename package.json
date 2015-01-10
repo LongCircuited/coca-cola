@@ -1,7 +1,7 @@
 {
-  "name": "coca-cola",
+  "name": "game",
   "version": "0.0.0",
-  "description": "Coca Cola powered pokemon-like game. Doesn't infringe any trademarks.",
+  "description": "Powered-like game.",
   "main": "app.js",
   "dependencies": {
     "grunt": "~0.4.5",
@@ -27,7 +27,7 @@
   "author": "LongCircuited",
   "license": "DWTFYW",
   "bugs": {
-    "url": "https://github.com/LongCircuited/coca-cola/issues"
+    "url": "https://github.com/LongCircuited/game/issues"
   },
-  "homepage": "https://github.com/LongCircuited/coca-cola"
+  "homepage": "https://github.com/LongCircuited/game"
 }

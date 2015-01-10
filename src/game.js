@@ -69,7 +69,7 @@ Game.prototype.begin = function ()
 Game.prototype.update = function ()
 {
   onemy.update(-1,1);
-  ployer.update(1,1);
+  //ployer.update(1,1);
 
 
 }

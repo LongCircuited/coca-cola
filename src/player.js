@@ -3,8 +3,8 @@ var thomas = require("thomas");
 function Player(x, y, image) {
 	this.x = x;
 	this.y = y;
-	this.WIDTH = 64;
-	this.HEIGHT = 64;
+	this.WIDTH = 52;
+	this.HEIGHT = 52;
 
 	this.rect = new thomas.Rectangle(this.x, this.y, this.WIDTH, this.HEIGHT);
 
@@ -20,14 +20,14 @@ Player.prototype.move = function(dir, tiles, world) {
 	
 	var mX = 0, mY = 0;
 	if(37 in dir) { 
-		mX += -1; 
+		mX += -5; 
 	} else if(39 in dir) { 
-		mX = 1;
+		mX = 5;
 	};
 	if(38 in dir) { 
-		mY = 1; 
+		mY = -5; 
 	} else if(40 in dir) { 
-		mY = -1;
+		mY = 5;
 	};
 	var movementRect = new thomas.Rectangle(this.x + mX, this.y + mY, this.WIDTH, this.HEIGHT);
 	var nextTile = tiles[Math.floor((this.x + mX) / 64) * world.DIMENSIONS + Math.floor((this.y + mY) / 64)];

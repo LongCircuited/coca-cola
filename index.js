@@ -3,3 +3,4 @@ var canvas = document.getElementById('display');
 
 var cocaCola = new CocaCola(canvas);
 cocaCola.start();
+

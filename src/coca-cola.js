@@ -3,6 +3,8 @@ var IMAGE_PATHS = [ 'images/dirt.png', 'images/grass.png' ];
 var thomas = require('thomas');
 var resourceUtil = require('./util/resource');
 
+var tile = require('./tile');
+
 function CocaCola(display)
 {
   this.display = display;
@@ -10,6 +12,7 @@ function CocaCola(display)
 }
 
 CocaCola.prototype = Object.create(thomas.Game.prototype);
+
 
 CocaCola.prototype.start = function ()
 {

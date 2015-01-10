@@ -1,4 +1,4 @@
-var IMAGE_PATHS = [ 'images/dirt.png', 'images/grass.png' ];
+var IMAGE_PATHS = [ 'images/dirt.png', 'images/grass.png' ,'images/players.png','images/longgrass.png'];
 
 var thomas = require('thomas');
 
@@ -9,9 +9,11 @@ var resourceUtil = require('./util/resource');
 
 var tile = require('./tile');
 var player = require('./player');
+var enemy = require('./enemy')
 
 var world = new world();
 var ployer;
+var onemy;
 
 var keys = {};
 
@@ -51,6 +53,7 @@ Game.prototype.start = function ()
       this.images = images;
 	  world.init(images);
       ployer = new player(0,0, this.images['images/dirt']);
+      onemy = new enemy(320,0,this.images['images/longgrass']);
       this.loop.start();
     }.bind(this)
   );
@@ -73,7 +76,9 @@ Game.prototype.render = function ()
 	this.context.clearRect(0,0,this.display.width, this.display.height);
 	world.render(this.context);
 	ployer.render(this.context);
+  onemy.render(this.context);
 
+  onemy.update(-1,-1)
 	ployer.update(1,1);
 
 }

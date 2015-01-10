@@ -3,10 +3,10 @@ var thomas = require('thomas');
 function CocaCola(display)
 {
   this.display = display;
-  this.loop = new thomas.Loop(this.callUpdate.bind(this.game), this.callRender.bind(this.game));
+  this.loop = new thomas.Loop(this.callUpdate.bind(this), this.callRender.bind(this));
 }
 
-CocaCola.prototype = Object.create(thomas.Game);
+CocaCola.prototype = Object.create(thomas.Game.prototype);
 
 CocaCola.prototype.start = function ()
 {

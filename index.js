@@ -24,7 +24,7 @@ Node.prototype.genNeighbours = function() {
 }
 
 var start = new Node(1,1);
-var end = new Node(6,5);
+var end = new Node(6,6);
 var map = [];
 for(var x = 0; x < 100; x++) {
 		map[x] = [];

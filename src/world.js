@@ -69,8 +69,8 @@ World.prototype.checkMove = function(x11, y11) {
 	var x1 = x0 + 38;
 	var y0 = y11 + 32 - (64 >> 1);
 	var y1 = y0 + 32;
-    for (var y = y0; y < y1; y++) {
-            for (var x = x0; x < x1; x++) {
+    for (var y = y0; y < y1; y+=2) {
+            for (var x = x0; x < x1; x+=2) {
                     if (this.getTile(Math.round(x / 64), Math.round(y / 64)).type == 1) collision = false;
             }
     }

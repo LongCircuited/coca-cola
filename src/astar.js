@@ -43,11 +43,9 @@ AStar.prototype.calculateRoute = function(start, dest, arr){
 	start.f = start.h;
 	start.genNeighbours();
 	open.push(start);
-
 	while(open.length > 0) {
 		var currentNode = null;
-		open.sort();
-	 	currentNode = open[0];
+	 	currentNode = open[this.getSmallestNode(open)];
 	 	if(this.equals(currentNode,dest)) return currentNode;
 	 	currentNode.genNeighbours();
 	 	var iOfCurr = open.indexOf(currentNode);
@@ -63,7 +61,6 @@ AStar.prototype.calculateRoute = function(start, dest, arr){
 	 			open.splice(iOfNeigh, 1);
 	 			closed.splice(iiOfNeigh,1);
 	 		}
-
 	 		if(open.indexOf(neighbour) == -1 && closed.indexOf(neighbour) == -1) {
 	 			neighbour.g = newG;
 	 			neighbour.h = this.manhattanDistance(neighbour.x, dest.x, neighbour.y, dest.y);

@@ -4,3 +4,4 @@ var canvas = document.getElementById('display');
 var game = new Game(canvas);
 game.start();
 
+

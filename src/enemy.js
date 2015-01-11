@@ -7,6 +7,8 @@ function getRandomArbitrary(min, max) {
 function Enemy(x, y, image) {
 	this.x = x;
 	this.y = y;
+	this.gameX = 0;
+	this.gameY = 0;
 	this.WIDTH = 64;
 	this.HEIGHT = 64;
 	this.foot = 0
@@ -17,12 +19,13 @@ function Enemy(x, y, image) {
 }
 
 Enemy.prototype.render = function(display) {
-	display.drawImage(this.image, this.x, this.y, this.WIDTH, this.HEIGHT);
+	display.drawImage(this.image, this.x + this.gameX, this.y + this.gameY, this.WIDTH, this.HEIGHT);
 }
 
 
-Enemy.prototype.update = function() {
-
+Enemy.prototype.update = function(offX, offY) {
+	this.gameX = offX;
+	this.gameY = offY;
 	if (this.foot ===0){
 		this.y +=1
 		//sets picture to ein.png

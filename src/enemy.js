@@ -38,7 +38,7 @@ Enemy.prototype.update = function(offX, offY) {
 
 	else if (this.foot ===2){
 		this.y +=1
-		//sets picture to ein3.png
+		//sets picture to ein3.png bllllaahhhh 
 	}
 	this.foot +=1
 	

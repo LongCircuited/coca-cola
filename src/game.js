@@ -55,6 +55,10 @@ Game.prototype.start = function ()
 	    world.init(images);
       ployer = new player(436,436, this.images['images/ba']);
       onemy = new enemy(320,0,this.images['images/ein']);
+      
+   for(var i = 0; i < this.route.length; i++) {
+     world.tiles[this.route[i].x * world.DIMENSIONS + this.route[i].y].image = this.images['images/longgrass'];
+   }
       this.loop.start();
     }.bind(this)
   );
@@ -84,9 +88,6 @@ Game.prototype.render = function (d)
   ployer.render(this.context);
   onemy.render(this.context);
 
-  // for(var i = 0; i < this.route.length; i++) {
-  //   world.tiles[this.route[i].x * world.DIMENSIONS + this.route[i].y].image = this.images['images/longgrass'];
-  // }
 
 }
 

@@ -1,17 +1,15 @@
 var IMAGE_PATHS = [ 'images/dirt.png', 'images/grass.png' ,'images/ein.png','images/longgrass.png','images/ba.png','images/ein2.png','images/ein3.png'];
 
 var thomas = require('thomas');
-
 var world = require("./world");
-
-
 
 var resourceUtil = require('./util/resource');
 
-
+var astar = require('./astar');
 var tile = require('./tile');
 var player = require('./player');
 var enemy = require('./enemy')
+var Node = require("./node");
 
 var world = new world();
 var ployer;
@@ -26,8 +24,9 @@ function Game(display)
   this.display.height = 1000;
   this.context = display.getContext("2d");
   this.loop = new thomas.Loop(this.callUpdate.bind(this), this.callRender.bind(this), { updatesPerSecond: 60 });
-
-
+  this.astar = new astar();
+  this.astar.createLookupStructure(world.map);
+  this.route = this.astar.calculateRoute(new Node(1,1), new Node(50,20));
 	window.addEventListener("keydown", keyDown, false);
 	window.addEventListener("keyup", keyUp);
 }
@@ -74,7 +73,7 @@ Game.prototype.update = function (d)
   //ployer.move(keys, world, d);
 
   world.move(keys, ployer, d);
-    onemy.update(world.offsetX, world.offsetY);
+  onemy.update(world.offsetX, world.offsetY);
 }
 
 Game.prototype.render = function (d)
@@ -84,6 +83,10 @@ Game.prototype.render = function (d)
   world.render(this.context);
   ployer.render(this.context);
   onemy.render(this.context);
+
+  for(var i = 0; i < this.route.length; i++) {
+    world.tiles[this.route[i].x * world.DIMENSIONS + this.route[i].y].image = this.images['images/longgrass'];
+  }
 
 }
 

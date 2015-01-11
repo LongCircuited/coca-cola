@@ -5,6 +5,8 @@ function AStar() {
 function Node(x, y) {
 	this.x = x;
 	this.y = y;
+
+	this.neighbours = [];
 	this.h = 0;	//movement cost from the start point A to the current square
 	this.g = 0; //estimated movement cost from the current square to the destination point 
 	this.f = this.h + this.g;
@@ -12,65 +14,92 @@ function Node(x, y) {
 	this.parent = null;
 }
 
+Node.prototype.genNeighbours = function() {
+	var right = new Node(this.x + 1, this.y);
+	var left = new Node(this.x - 1, this.y);
+	var top = new Node(this.x, this.y + 1);
+	var bottom = new Node(this.x, this.y - 1);
+	this.neighbours = [right, left, top, bottom];
+}
+
 AStar.prototype.manhattanDistance = function(x0, x1, y0, y1) {
 	return Math.abs(x1-x0) + Math.abs(y1-y0);
 }
 
 AStar.prototype.getSmallestNode = function(openarr) {
-	var comp = openarr[0];
+	var comp = 0;
 	for(var i = 0; i < openarr.length; i++) {
-		if(openarr[i].f < comp) comp = openarr[i]
+		if(openarr[i].f < openarr[comp].f) comp = i
 	}
 	return comp;
 }
 
-AStar.prototype.getNeighbours = function(arr, current) {
-	var right = new Node(current.x + 1, current.y);
-	var left = new Node(Math.abs(current.x - 1), current.y);
-	var top = new Node(current.x, current.y + 1);
-	var bottom = new Node(current.x, Math.abs(current.y - 1));
-	return [right, left, top, bottom];
-}
-
 AStar.prototype.calculateRoute = function(start, dest, arr){
-	start.f = this.manhattanDistance(start.x, dest.x, start.y, dest.y);
+	var open = new Array();
+	var closed = new Array();
 
-	var closed = [];
+	start.g = 0;
+	start.h = this.manhattanDistance(start.x, dest.x, start.y, dest.y);
+	start.f = start.h;
+	start.genNeighbours();
+	open.push(start);
 
-	var open = [start];
-	var traversed = [];
+	while(open.length > 0) {
+		var currentNode = null;
+		open.sort();
+	 	currentNode = open[0];
+	 	if(this.equals(currentNode,dest)) return open;
+	 	currentNode.genNeighbours();
+	 	var iOfCurr = open.indexOf(currentNode);
+	 	open.splice(iOfCurr, 1);
+	 	closed.push(currentNode);
+	 	for(var i = 0; i < currentNode.neighbours.length; i++) {
+	 		var neighbour = currentNode.neighbours[i];
+	 		if(neighbour == null) continue;
+	 		var newG = currentNode.g + 1;
+	 		if(newG < neighbour.g) {
+	 			var iOfNeigh = open.indexOf(neighbour);
+	 			var iiOfNeigh = closed.indexOf(neighbour);
+	 			open.splice(iOfNeigh, 1);
+	 			closed.splice(iiOfNeigh,1);
+	 		}
 
+	 		if(open.indexOf(neighbour) == -1 && closed.indexOf(neighbour) == -1) {
+	 			neighbour.g = newG;
+	 			neighbour.h = this.manhattanDistance(neighbour.x, dest.x, neighbour.y, dest.y);
+	 			neighbour.f = neighbour.g + neighbour.h;
+	 			neighbour.parent = currentNode;
+	 			open.push(neighbour);
+	 		}
+	 	}
 
-	var currentNode = this.getSmallestNode(open);
-	for(var p = 0; p < 100; p++) {
-		currentNode = this.getSmallestNode(open);
-		if(currentNode.x == dest.x && currentNode.y == dest.y) {
-			//We're done, reconstruct path
-			return true;
-		}
-		open = open.splice(open.indexOf(currentNode), 1);
-		closed.push(currentNode);
-
-		var neighbours = this.getNeighbours(arr, currentNode);
-		console.log(neighbours)
-		for(var i = 0; i < neighbours.length; i++) {
-			if(closed.indexOf(neighbours[i]) !== -1) {
-				continue;
-			}
-			var temp_g = this.manhattanDistance(neighbours[i].x, dest.x, neighbours[i].y, dest.y);
-			if(open.indexOf(neighbours[i]) == -1 || temp_g < neighbours[i].g) {
-				neighbours[i].parent = currentNode;
-				neighbours[i].g = temp_g;
-				neighbours[i].f = neighbours[i].g + this.manhattanDistance(neighbours[i].x, dest.x, neighbours[i].y, dest.y);
-				if(open.indexOf(neighbours[i]) == -1) {
-					open.push(neighbours[i]);
-				}
-			}
-		}
 	}
-		
-		
 
 }
+
+AStar.prototype.equals = function(node1, node2) {
+	if(node1.x == node2.x && node1.y == node2.y) {
+		return true;
+	}
+	return false;
+}
+
+AStar.prototype.sortNodes = function(arr) {
+	var swap = true;
+	while(swap) {
+		swap = false;
+		for(var i = 0; i < arr.length; i++) {
+			if(arr[i].f < arr[i+1].f) {
+				var temp = arr[i + 1];
+				arr[i + 1] = arr[i];
+				arr[i] = temp;
+				swap = true;
+			} 
+		}
+	}	
+	return arr;
+}
+
+
 
 module.exports = exports = AStar;

@@ -1,12 +1,10 @@
 function Node(x, y) {
 	this.x = x;
 	this.y = y;
-
 	this.neighbours = [];
 	this.h = 0;	//movement cost from the start point A to the current square
 	this.g = 0; //estimated movement cost from the current square to the destination point 
-	this.f = this.h + this.g;
-	this.state = 0;
+	this.f = this.h + this.g; // sum of the two
 	this.parent = null;
 }
 

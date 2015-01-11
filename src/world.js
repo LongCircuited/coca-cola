@@ -4,9 +4,9 @@ function World() {
 	this.map = [];
 
 
-	for(var x = 0; x < 100; x++) {
+	for(var x = 0; x < 50; x++) {
 		this.map[x] = [];
-		for(var y = 0; y < 100; y++) {
+		for(var y = 0; y < 50; y++) {
 			var rand = Math.random();
 			if(rand > 0.9) {
 				this.map[x][y] = 1;
@@ -28,8 +28,8 @@ function World() {
 
 World.prototype.init = function(images) {
 	// Fill array with tiles from the map array
-	for(var x = 0; x < this.WIDTH; x++) {
-		for(var y = 0; y < this.WIDTH; y++) {
+	for(var x = 0; x < this.map.length; x++) {
+		for(var y = 0; y < this.map[x].length; y++) {
 			if(this.map[x][y] == 1) {
 				this.tiles[x * (this.DIMENSIONS) + y] = new tile(x * this.TILE_WIDTH, y * this.TILE_HEIGHT, this.TILE_WIDTH, this.TILE_HEIGHT, images['images/dirt']);
 				this.tiles[x * (this.DIMENSIONS) + y].type = 1;	
@@ -71,7 +71,7 @@ World.prototype.checkMove = function(x11, y11) {
 	var y1 = y0 + 32;
     for (var y = y0; y < y1; y+=2) {
             for (var x = x0; x < x1; x+=2) {
-                    if (this.getTile(Math.round(x / 64), Math.round(y / 64)).type == 1) collision = false;
+                    if (this.getTile(Math.round(x / this.TILE_WIDTH), Math.round(y / this.TILE_HEIGHT)).type == 1) collision = false;
             }
     }
 	return collision;
@@ -94,15 +94,19 @@ World.prototype.getTile = function(x, y) {
 	return this.tiles[x * this.DIMENSIONS + y];
 }
 
-World.prototype.render = function(display) {
-	// Slam the tiles onto the screen
-	for(var x = 0; x < this.map.length; x++) {
-		for(var y = 0; y < this.map[x].length; y++) {
-			var tile = this.tiles[x * (this.DIMENSIONS) + y];
-			tile.render(display);
-		}
-	}
+World.prototype.onScreen = function(x, y) {
+	return true;
 }
 
 
+World.prototype.render = function(display) {
+	// Slam the tiles onto the screen
+	for(var i = 0; i < this.DIMENSIONS; i++) {
+			var row = i % this.map.length;
+			var col = ~~(i / this.map.length);
+			var tile = this.getTile(row, col);		
+			tile.render(display);
+		}
+	}
+	
 module.exports = exports = World;

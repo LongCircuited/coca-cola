@@ -14,7 +14,7 @@ function Tile(x, y, w, h,image) {
 }
 
 Tile.prototype.render = function(display) {
-	display.drawImage(this.image, this.x + this.shiftX, this.y + this.shiftY, this.w, this.h);
+	display.drawImage(this.image, parseInt(this.x + this.shiftX), parseInt(this.y + this.shiftY), this.w, this.h);
 }
 
 Tile.prototype.update = function(x, y) {

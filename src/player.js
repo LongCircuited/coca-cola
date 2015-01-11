@@ -35,17 +35,17 @@ Player.prototype.move = function(dir, world, del) {
 }
 
 Player.prototype.checkMove = function(x11, y11, world) {
-	var collision = true;
-	var x0 = x11 - (64 >> 1);
-	var x1 = x0 + 64;
-	var y0 = y11 + 32 - (64 >> 1);
-	var y1 = y0 + 32;
-    for (var y = y0; y < y1; y++) {
-            for (var x = x0; x < x1; x++) {
-                    if (world.getTile(Math.round(x / 64), Math.round(y / 64)).type == 1) collision = false;
-            }
-    }
-	return collision;
+	// var collision = true;
+	// var x0 = x11 - (64 >> 1);
+	// var x1 = x0 + 64;
+	// var y0 = y11 + 32 - (64 >> 1);
+	// var y1 = y0 + 32;
+ //    for (var y = y0; y < y1; y++) {
+ //            for (var x = x0; x < x1; x++) {
+ //                    if (world.getTile(Math.round(x >> 6), Math.round(y >> 6)).type == 1) collision = false;
+ //            }
+ //    }
+	// return collision;
 }
 
 Player.prototype.update = function(x, y) {

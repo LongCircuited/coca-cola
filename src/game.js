@@ -23,10 +23,10 @@ function Game(display)
   this.display.width = 1000;
   this.display.height = 1000;
   this.context = display.getContext("2d");
-  this.loop = new thomas.Loop(this.callUpdate.bind(this), this.callRender.bind(this), { updatesPerSecond: 60 });
+  this.loop = new thomas.Loop(this.callUpdate.bind(this), this.callRender.bind(this), { updatesPerSecond: 100, rendersPerSecond: 1000 });
   this.astar = new astar(world.map);
- 
-  this.route = this.astar.calculateRoute(new Node(1,1), new Node(50,20));
+
+  this.route = this.astar.calculateRoute(new Node(1,1), new Node(5,20));
 	window.addEventListener("keydown", keyDown, false);
 	window.addEventListener("keyup", keyUp);
 }
@@ -84,9 +84,9 @@ Game.prototype.render = function (d)
   ployer.render(this.context);
   onemy.render(this.context);
 
-  for(var i = 0; i < this.route.length; i++) {
-    world.tiles[this.route[i].x * world.DIMENSIONS + this.route[i].y].image = this.images['images/longgrass'];
-  }
+  // for(var i = 0; i < this.route.length; i++) {
+  //   world.tiles[this.route[i].x * world.DIMENSIONS + this.route[i].y].image = this.images['images/longgrass'];
+  // }
 
 }
 

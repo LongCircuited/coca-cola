@@ -22,8 +22,12 @@ Player.prototype.move = function(dir, world, del) {
 	else if (83 in dir) nY+=dy; 
 	if      (65 in dir) nX-=dx; 
 	else if (68 in dir) nX+=dx; 
-	if(this.checkMove(nX, nY, world)) {
+	if(this.checkMove(nX, this.y, world)) {
 		this.x = nX; 
+		
+	}
+	if(this.checkMove(this.x, nY, world)) {
+	
 		this.y = nY; 
 	}
 }

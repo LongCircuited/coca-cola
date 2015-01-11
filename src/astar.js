@@ -48,7 +48,7 @@ AStar.prototype.calculateRoute = function(start, dest, arr){
 		var currentNode = null;
 		open.sort();
 	 	currentNode = open[0];
-	 	if(this.equals(currentNode,dest)) return open;
+	 	if(this.equals(currentNode,dest)) return currentNode;
 	 	currentNode.genNeighbours();
 	 	var iOfCurr = open.indexOf(currentNode);
 	 	open.splice(iOfCurr, 1);

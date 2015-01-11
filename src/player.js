@@ -13,6 +13,7 @@ Player.prototype.render = function(display) {
 	display.drawImage(this.image, this.x, this.y, this.WIDTH, this.HEIGHT);
 }
 
+<<<<<<< Updated upstream
 Player.prototype.move = function(dir, world, del) {
 	var dx = 4 / (del);
 	var dy =  4 / (del);
@@ -46,6 +47,8 @@ Player.prototype.checkMove = function(x11, y11, world) {
     }
 	return collision;
 }
+=======
+>>>>>>> Stashed changes
 
 Player.prototype.update = function(x, y) {
 	this.x += x;

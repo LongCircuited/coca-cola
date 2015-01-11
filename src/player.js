@@ -8,6 +8,7 @@ function Player(x, y, image) {
 	this.image = image;
 }
 
+
 Player.prototype.render = function(display) {
 	display.drawImage(this.image, this.x, this.y, this.WIDTH, this.HEIGHT);
 }

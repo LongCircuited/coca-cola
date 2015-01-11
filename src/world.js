@@ -1,8 +1,7 @@
 var tile = require("./tile");
 
 function World() {
-	this.map = [
-	];
+	this.map = [];
 
 
 	for(var x = 0; x < 100; x++) {

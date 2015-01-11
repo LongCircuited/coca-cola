@@ -1,7 +1,8 @@
 var Node = require("./node");
 
-function AStar() {
+function AStar(arr) {
 	this.lookupStruct = [];
+	this.createLookupStructure(arr);
 }
 
 AStar.prototype.manhattanDistance = function(x0, x1, y0, y1) {
@@ -84,7 +85,7 @@ AStar.prototype.calculateRoute = function(start, dest){
 	 	}
 
 	}
-	
+
 	return null;
 
 }

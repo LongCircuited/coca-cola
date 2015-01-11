@@ -24,8 +24,8 @@ function Game(display)
   this.display.height = 1000;
   this.context = display.getContext("2d");
   this.loop = new thomas.Loop(this.callUpdate.bind(this), this.callRender.bind(this), { updatesPerSecond: 60 });
-  this.astar = new astar();
-  this.astar.createLookupStructure(world.map);
+  this.astar = new astar(world.map);
+ 
   this.route = this.astar.calculateRoute(new Node(1,1), new Node(50,20));
 	window.addEventListener("keydown", keyDown, false);
 	window.addEventListener("keyup", keyUp);

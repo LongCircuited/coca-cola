@@ -53,8 +53,13 @@ World.prototype.move = function(dir, player, del) {
 	else if (83 in dir && ++kpc) nY-=dy; 
 	if      (65 in dir && ++kpc) nX+=dx; 
 	else if (68 in dir && ++kpc) nX-=dx; 
-	if(this.checkMove(player.x - nX, player.y - nY) && kpc) {
-		this.shift(nX, nY);
+	if(this.checkMove(player.x - nX, player.y - this.offsetY)) {
+		this.shift(nX, this.offsetY)
+		
+	}
+	if(this.checkMove(player.x - this.offsetX, player.y - nY)) {
+	
+		this.shift(this.offsetX, nY)
 	}
 }
 
@@ -65,7 +70,6 @@ World.prototype.checkMove = function(x11, y11) {
 	var x1 = x0 + 38;
 	var y0 = y11 + 32 - (64 >> 1);
 	var y1 = y0 + 32;
-	console.log(x11, y11)
     for (var y = y0; y < y1; y++) {
             for (var x = x0; x < x1; x++) {
                     if (this.getTile(Math.round(x / 64), Math.round(y / 64)).type == 1) collision = false;

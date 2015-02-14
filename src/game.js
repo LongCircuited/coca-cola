@@ -1,4 +1,4 @@
-var IMAGE_PATHS = [ 'images/dirt.png', 'images/grass.png' ,'images/ein.png','images/longgrass.png','images/ba.png','images/ein2.png','images/ein3.png'];
+var IMAGE_PATHS = [ 'images/dirt.png', 'images/grass.png' ,'images/ein.png','images/water.png','images/ba.png','images/ein2.png','images/ein3.png'];
 
 var thomas = require('thomas');
 var world = require("./world");
@@ -26,7 +26,7 @@ function Game(display)
   this.loop = new thomas.Loop(this.callUpdate.bind(this), this.callRender.bind(this), { updatesPerSecond: 100, rendersPerSecond: 1000 });
   this.astar = new astar(world.map);
 
-  this.route = this.astar.calculateRoute(new Node(1,1), new Node(5,20));
+  //this.route = this.astar.calculateRoute(new Node(1,1), new Node(19,13));
 	window.addEventListener("keydown", keyDown, false);
 	window.addEventListener("keyup", keyUp);
 }
@@ -46,19 +46,15 @@ Game.prototype.start = function ()
 {
 
   this.context.imageSmoothingEnabled = false;
-
   resourceUtil.loadImages(
     IMAGE_PATHS,
     function (images)
     {
       this.images = images;
 	    world.init(images);
+      world.shift(436, 436);
       ployer = new player(436,436, this.images['images/ba']);
       onemy = new enemy(320,0,this.images['images/ein']);
-      
-   for(var i = 0; i < this.route.length; i++) {
-     world.tiles[this.route[i].x * world.DIMENSIONS + this.route[i].y].image = this.images['images/longgrass'];
-   }
       this.loop.start();
     }.bind(this)
   );
@@ -73,9 +69,6 @@ Game.prototype.begin = function ()
 
 Game.prototype.update = function (d)
 {
-
-  //ployer.move(keys, world, d);
-
   world.move(keys, ployer, d);
   onemy.update(world.offsetX, world.offsetY);
 }

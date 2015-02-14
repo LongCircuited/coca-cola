@@ -26,22 +26,6 @@ Enemy.prototype.render = function(display) {
 Enemy.prototype.update = function(offX, offY) {
 	this.gameX = offX;
 	this.gameY = offY;
-	// if (this.foot == 0){
-	// 	this.y +=1
-	// 	//sets picture to ein.png
-	// }
-
-	// else if (this.foot == 1){
-	// 	this.y +=1
-	// 	//sets picture to ein1.png
-	// }
-
-	// else if (this.foot == 2){
-	// 	this.y +=1
-	// 	//sets picture to ein3.png
-	// }
-	// this.foot +=1
-	// this.foot %= 2;
 }
 
 

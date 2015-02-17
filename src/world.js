@@ -16,61 +16,73 @@ function World() {
 	//In tile units
  	this.chunkWidth = 13;
  	this.chunkHeight = 8;
-
- 	this.noChunks = 100;
+ 	this.noChunks = 5;
+ 	this.count = 0;
 	this.chunks = [];
+	this.images = null;
 }
 
 World.prototype.init = function(images) {
+	this.images = images;
 	//Initialize chunks that fill the screen
-	for(var i = -this.noChunks; i < this.noChunks; i++) {
-		var row = i % this.chunkWidth;
-		var col = Math.floor(i / this.chunkWidth);
-		this.chunks[row * this.chunkWidth + col] = new Chunk(row, col, 8, 8, this.noiseGen);
-		this.chunks[row * this.chunkWidth + col].init(images);
+	for(var x = -this.noChunks; x <= this.noChunks; x++) {
+		for(var y = -this.noChunks; y <= this.noChunks; y++) {
+			this.chunks[this.count++] = new Chunk(x + this.offsetX, y + this.offsetY, 8, 8, this.noiseGen);
+			this.chunks[this.count - 1].init(images);
+		}
 	}
+}
 
+World.prototype.manageChunks = function() {
+	var remove = this.checkRemove();
+	var add = [];
+	if(remove.length == 0) return true;
+	//Calculate where to add chunks
+	for(var i = 0; i < remove.length; i++) {
+		var oldChunk = this.chunks[remove[i]];
+		var newChunk = new Chunk(-oldChunk.x - oldChunk.offsetX, -oldChunk.y - oldChunk.offsetY, 8, 8, this.noiseGen);
+		newChunk.init(this.images);
+		add[i] = newChunk;
+	}
+	//Swap them out
+	for(var i = 0; i < this.chunks.length; i++) {
+		for(var j = 0; j < remove.length; j++) {
+			if(i == remove[j]) {
+				this.chunks[i] = add[j];
+			}
+		}
+	}
 
 }
 
 World.prototype.render = function(display) {
-	for(var i = -this.noChunks; i < this.noChunks; i++) {
-		var row = i % this.chunkWidth;
-		var col = Math.floor(i / this.chunkWidth);
-		this.chunks[row * this.chunkWidth + col].render(display);
+	// Slam the tiles onto the screen
+
+	for(var i = 0; i < this.count; i++) {
+		if(!this.chunks[i].offScreen()) {
+			this.chunks[i].render(display);
+		}
 	}
-
-
-	// // Slam the tiles onto the screen
-	// for(var i = 0; i < this.DIMENSIONS; i++) {
-	// 	var row = i % this.map.length;
-	// 	var col = ~~(i / this.map.length);
-	// 	var tile = this.getTile(row, col);		
-	// 	tile.render(display);
-	// }
 }
 	
+World.prototype.checkRemove = function() {
+	var removeList = [];
+	for(var i = 0; i < this.count; i++) {
+		if(this.chunks[i].offScreen()) {
+			//Push the index of the chunks to remove this tick
+			removeList.push(i);
+		}
+	}
+	return removeList;
+}
 
 World.prototype.shift = function(x1, y1) {
 	// Shove the map over by a few
 	this.offsetX = x1;
 	this.offsetY = y1;
-
-	for(var i = -this.noChunks; i < this.noChunks; i++) {
-		var row = i % this.chunkWidth;
-		var col = Math.floor(i / this.chunkWidth);
-		this.chunks[row * this.chunkWidth + col].shift(this.offsetX, this.offsetY);
-
+	for(var i = 0; i < this.count; i++) {
+		this.chunks[i].shift(this.offsetX, this.offsetY);
 	}
-
-	// // Throw the values into the tiles
-	// for(var x = 0; x < this.map.length; x++) {
-	// 	for(var y = 0; y < this.map[x].length; y++) {
-	// 		this.tiles[x * (this.DIMENSIONS) + y].shiftX = x1;
-	// 		this.tiles[x * (this.DIMENSIONS) + y].shiftY = y1;
-	// 	}
-	// }
-
 }
 
 

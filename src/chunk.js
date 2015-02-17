@@ -37,8 +37,22 @@ Chunk.prototype.render = function(display) {
 		
 	}
 	
-	display.fillText("CHUNK: " + this.x + ", " + this.y, this.x * 8 * this.TILE_WIDTH + 20 + this.offsetX, this.y * 8 *  this.TILE_HEIGHT + 20 + this.offsetY);
+	//display.fillText("CHUNK: " + this.x + ", " + this.y, this.x * 8 * this.TILE_WIDTH + 20 + this.offsetX, this.y * 8 *  this.TILE_HEIGHT + 20 + this.offsetY);
 
+}
+
+Chunk.prototype.offScreen = function() {
+	// Grab screen coords
+	var chunkX = this.x * this.width * this.TILE_WIDTH + this.offsetX;
+	var chunkY = this.y * this.width * this.TILE_HEIGHT + this.offsetY;
+	
+	if(chunkX > 1000 || chunkX < -(8*16)) {
+		return true;
+	}
+	if(chunkY > 500 || chunkY < -(8*16)) {
+		return true;
+	}
+	return false;
 }
 
 Chunk.prototype.shift = function(x1, y1) {
@@ -57,8 +71,8 @@ Chunk.prototype.init = function(images) {
 	// Fill array with tiles from the map array
 	for(var x = 0; x < this.map.length; x++) {
 		for(var y = 0; y < this.map[x].length; y++) {
-			var chunkX = this.x * 8 * this.TILE_WIDTH + x * this.TILE_WIDTH;
-			var chunkY = this.y * 8 * this.TILE_HEIGHT + y * this.TILE_HEIGHT;
+			var chunkX = this.x * this.width * this.TILE_WIDTH + x * this.TILE_WIDTH;
+			var chunkY = this.y * this.width * this.TILE_HEIGHT + y * this.TILE_HEIGHT;
 
 			if(this.map[x][y] == 1) {
 				this.tiles[x * (this.DIMENSIONS) + y] = new tile(chunkX, chunkY,this.TILE_WIDTH, this.TILE_HEIGHT, images['images/water']);
@@ -80,9 +94,9 @@ Chunk.prototype.genLandscape = function() {
 		this.map[x] = [];
 		for(var y = 0; y < this.height; y++) {
 			var cc = this.getWorldCoord(x, y);
-			if(this.noiseGen.noise(cc[0]/32, cc[1]/32) > 0.1) {
+			if(this.noiseGen.noise(cc[0]/64, cc[1]/64) > 0.5) {
 				this.map[x][y] = 1;
-			} else if(this.noiseGen.noise(cc[0]/32, cc[1]/32) > 0.001) {
+			} else if(this.noiseGen.noise(cc[0]/64, cc[1]/64) > 0.001) {
 				this.map[x][y] = 2;
 			} else {
 				this.map[x][y] = 0;

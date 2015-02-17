@@ -53,7 +53,7 @@ Game.prototype.start = function ()
       this.images = images;
 	    world.init(images);
       world.shift(0, 0);
-      ployer = new player(436,436, this.images['images/ba']);
+      ployer = new player(436,218, this.images['images/ba']);
       onemy = new enemy(320,0,this.images['images/ein']);
       this.loop.start();
     }.bind(this)
@@ -70,6 +70,7 @@ Game.prototype.begin = function ()
 Game.prototype.update = function (d)
 {
   world.move(keys, ployer, d);
+  world.manageChunks();
   //onemy.update(world.offsetX, world.offsetY);
 }
 

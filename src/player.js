@@ -3,8 +3,8 @@ var thomas = require("thomas");
 function Player(x, y, image) {
 	this.x = x;
 	this.y = y;
-	this.WIDTH = 64;
-	this.HEIGHT = 64;
+	this.WIDTH = 16;
+	this.HEIGHT = 16;
 	this.image = image;
 }
 

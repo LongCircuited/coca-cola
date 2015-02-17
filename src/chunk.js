@@ -22,6 +22,9 @@ Chunk.prototype.getWorldCoord = function(x, y) {
 	return [x + (this.x * this.width), y + (this.y * this.height)]
 }
 
+Chunk.prototype.worldToLocal = function(x, y) {
+	return [x - (this.x * this.width), y - (this.y * this.height)];
+}
 
 Chunk.prototype.getTile = function(x, y) {
 	return this.tiles[x * this.DIMENSIONS + y];
@@ -37,7 +40,7 @@ Chunk.prototype.render = function(display) {
 		
 	}
 	
-	//display.fillText("CHUNK: " + this.x + ", " + this.y, this.x * 8 * this.TILE_WIDTH + 20 + this.offsetX, this.y * 8 *  this.TILE_HEIGHT + 20 + this.offsetY);
+	display.fillText("CHUNK: " + this.x + ", " + this.y, this.x * 8 * this.TILE_WIDTH + 20 + this.offsetX, this.y * 8 *  this.TILE_HEIGHT + 20 + this.offsetY);
 
 }
 
@@ -98,9 +101,9 @@ Chunk.prototype.genLandscape = function() {
 		this.map[x] = [];
 		for(var y = 0; y < this.height; y++) {
 			var cc = this.getWorldCoord(x, y);
-			if(this.noiseGen.noise(cc[0]/64, cc[1]/64) > 0.5) {
+			if(this.noiseGen.noise(cc[0]/16, cc[1]/16) > 0.5) {
 				this.map[x][y] = 1;
-			} else if(this.noiseGen.noise(cc[0]/64, cc[1]/64) > 0.001) {
+			} else if(this.noiseGen.noise(cc[0]/16, cc[1]/16) > 0.001) {
 				this.map[x][y] = 2;
 			} else {
 				this.map[x][y] = 0;

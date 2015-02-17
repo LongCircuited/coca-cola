@@ -70,9 +70,9 @@ Game.prototype.begin = function ()
 Game.prototype.update = function (d)
 {
   
-  world.move(keys, ployer, d);
+ 
   world.manageChunks();
-
+  world.move(keys, ployer, d);
   //onemy.update(world.offsetX, world.offsetY);
 }
 

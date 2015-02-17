@@ -55,32 +55,31 @@ World.prototype.manageChunks = function() {
 	// }
 
 	for(var i = 0; i < this.count; i++) {
-
-		if(this.chunks[i].offScreen() == "lateral-l") {
-
-				this.chunks[i].x += this.noChunks * 2;
-				this.chunks[i].init(this.images);
-				if(this.chunks[i].offScreen()) {
+		var chunk = this.chunks[i];
+		if(chunk.offScreen() == "lateral-l") {
+				chunk.x += this.noChunks * 2;
+				chunk.init(this.images);
+				if(chunk.offScreen()) {
 					break;
 				}
-		} else if(this.chunks[i].offScreen() == "lateral-r") {
-				this.chunks[i].x -= this.noChunks * 2;
-				this.chunks[i].init(this.images);
-				if(this.chunks[i].offScreen()) {
+		} else if(chunk.offScreen() == "lateral-r") {
+				chunk.x -= this.noChunks * 2;
+				chunk.init(this.images);
+				if(chunk.offScreen()) {
 					break;
 				}
-		} else if(this.chunks[i].offScreen() == "vertical-u") {
+		} else if(chunk.offScreen() == "vertical-u") {
 
-				this.chunks[i].y += this.noChunks * 2;
-				this.chunks[i].init(this.images);
-				if(this.chunks[i].offScreen()) {
+				chunk.y += this.noChunks * 2;
+				chunk.init(this.images);
+				if(chunk.offScreen()) {
 					break;
 				}
-		} else if(this.chunks[i].offScreen() == "vertical-d") {
+		} else if(chunk.offScreen() == "vertical-d") {
 
-				this.chunks[i].y -= this.noChunks * 2;
-				this.chunks[i].init(this.images);
-				if(this.chunks[i].offScreen()) {
+				chunk.y -= this.noChunks * 2;
+				chunk.init(this.images);
+				if(chunk.offScreen()) {
 					break;
 				}
 		}
@@ -90,11 +89,10 @@ World.prototype.manageChunks = function() {
 
 World.prototype.render = function(display) {
 	// Slam the tiles onto the screen
-
 	for(var i = 0; i < this.count; i++) {
-		//if(!this.chunks[i].offScreen()) {
+		if(!this.chunks[i].offScreen()) {
 			this.chunks[i].render(display);
-		//}
+		}
 	}
 }
 	
@@ -131,31 +129,36 @@ World.prototype.move = function(dir, player, del) {
 	else if (83 in dir && ++kpc) nY-=dy; 
 	if      (65 in dir && ++kpc) nX+=dx; 
 	else if (68 in dir && ++kpc) nX-=dx; 
-	//if(this.checkMove(player.x - nX, player.y - this.offsetY)) {
+	if(this.checkMove(player.x - nX, player.y - this.offsetY)) {
 		this.shift(nX, this.offsetY)
-	//}
-	//if(this.checkMove(player.x - this.offsetX, player.y - nY)) {
+	}
+	if(this.checkMove(player.x - this.offsetX, player.y - nY)) {
 		this.shift(this.offsetX, nY)
-	//}
+	}
 }
 
 World.prototype.checkMove = function(x11, y11) {
+try {
 	var collision = true;
 	x11 += 25;
 	var x0 = x11 - 20 - (48 >> 1);
 	var x1 = x0 + 38;
-	var y0 = y11 + 32 - (64 >> 1);
+	var y0 = y11 + 20 - (64 >> 1);
 	var y1 = y0 + 32;
     for (var y = y0; y < y1; y+=2) {
             for (var x = x0; x < x1; x+=2) {
                     if (this.collideable(this.getTile(Math.round(x / this.TILE_WIDTH), Math.round(y / this.TILE_HEIGHT)).type)) collision = false;
             }
     }
+} catch(e) {
+
+}
 	return collision;
 }
 
+
 World.prototype.collideable = function(tId) {
-	if(tId == 2 || tId == 0) {
+	if(tId == 0) {
 		return false;
 	} else {
 		return true;
@@ -165,7 +168,24 @@ World.prototype.collideable = function(tId) {
 
 
 World.prototype.getTile = function(x, y) {
-	return this.tiles[x * this.DIMENSIONS + y];
+	//Narrow down to the chunk
+	var chunk = null;
+	var loc = null;
+	for(var i = 0; i < this.chunks.length; i++) {
+		var chunkCurr = this.chunks[i];
+		var chunkXR = chunkCurr.x * 8;
+		var chunkYR = chunkCurr.y * 8 - 1;
+		// Check if x is within bounds
+		if(x >= chunkXR && x <= (chunkXR + (this.chunkHeight) - 1)) {
+			//Check if y is within bounds
+			if(y >= chunkYR && y <= (chunkYR + (this.chunkHeight))) {
+				chunk = chunkCurr;
+				loc = chunk.worldToLocal(x, y);
+			}
+		}
+	}
+
+	return chunk.getTile(Math.round(loc[0]), Math.round(loc[1]));
 }
 
 World.prototype.onScreen = function(x, y) {

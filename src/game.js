@@ -21,7 +21,7 @@ function Game(display)
 {
   this.display = display;
   this.display.width = 1000;
-  this.display.height = 1000;
+  this.display.height = 500;
   this.context = display.getContext("2d");
   this.loop = new thomas.Loop(this.callUpdate.bind(this), this.callRender.bind(this), { updatesPerSecond: 100, rendersPerSecond: 1000 });
   this.astar = new astar(world.map);
@@ -52,7 +52,7 @@ Game.prototype.start = function ()
     {
       this.images = images;
 	    world.init(images);
-      world.shift(436, 436);
+      world.shift(0, 0);
       ployer = new player(436,436, this.images['images/ba']);
       onemy = new enemy(320,0,this.images['images/ein']);
       this.loop.start();
@@ -70,7 +70,7 @@ Game.prototype.begin = function ()
 Game.prototype.update = function (d)
 {
   world.move(keys, ployer, d);
-  onemy.update(world.offsetX, world.offsetY);
+  //onemy.update(world.offsetX, world.offsetY);
 }
 
 Game.prototype.render = function (d)

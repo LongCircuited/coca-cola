@@ -11,8 +11,8 @@ function Chunk(x, y, w, h, noiseGen) {
 	this.tiles = [w * h];
 	this.relX = this.x + this.width;
 	this.relY = this.y + this.height;
-	this.TILE_WIDTH = 16;
-	this.TILE_HEIGHT = 16;
+	this.TILE_WIDTH = 64;
+	this.TILE_HEIGHT = 64;
 	this.noiseGen = noiseGen;
 	this.offsetX = 0;
 	this.offsetY = 0;
@@ -46,11 +46,15 @@ Chunk.prototype.offScreen = function() {
 	var chunkX = this.x * this.width * this.TILE_WIDTH + this.offsetX;
 	var chunkY = this.y * this.width * this.TILE_HEIGHT + this.offsetY;
 	
-	if(chunkX > 1000 || chunkX < -(8*16)) {
-		return true;
+	if(chunkX > 2000) {
+		return "lateral-r";
+	} else if(chunkX < -1000) {
+		return "lateral-l";
 	}
-	if(chunkY > 500 || chunkY < -(8*16)) {
-		return true;
+	if(chunkY > 2000) {
+		return "vertical-d";
+	} else if(chunkY < -1000) {
+		return "vertical-u";
 	}
 	return false;
 }

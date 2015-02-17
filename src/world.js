@@ -8,15 +8,16 @@ function World() {
 	this.noiseGen = new noise();
  	this.TILE_WIDTH = 64;
  	this.TILE_HEIGHT = 64;
- 	this.offsetX = 0;
- 	this.offsetY = 0;
+ 	this.offsetX = 40;
+ 	this.offsetY = 26;
  	//In chunk units
  	this.windowHeight = 10;
  	this.windowWidth = 20;
 	//In tile units
  	this.chunkWidth = 13;
  	this.chunkHeight = 8;
- 	this.noChunks = 5;
+ 	this.noChunks = 3;
+ 	this.factor = 4;
  	this.count = 0;
 	this.chunks = [];
 	this.images = null;
@@ -27,7 +28,7 @@ World.prototype.init = function(images) {
 	//Initialize chunks that fill the screen
 	for(var x = -this.noChunks; x <= this.noChunks; x++) {
 		for(var y = -this.noChunks; y <= this.noChunks; y++) {
-			this.chunks[this.count++] = new Chunk(x + this.offsetX, y + this.offsetY, 8, 8, this.noiseGen);
+			this.chunks[this.count++] = new Chunk(x + this.offsetX/this.TILE_WIDTH, y + this.offsetY/this.TILE_HEIGHT, 8, 8, this.noiseGen);
 			this.chunks[this.count - 1].init(images);
 		}
 	}
@@ -52,6 +53,38 @@ World.prototype.manageChunks = function() {
 	// 		}
 	// 	}
 	// }
+
+	for(var i = 0; i < this.count; i++) {
+
+		if(this.chunks[i].offScreen() == "lateral-l") {
+
+				this.chunks[i].x += this.noChunks * 2;
+				this.chunks[i].init(this.images);
+				if(this.chunks[i].offScreen()) {
+					break;
+				}
+		} else if(this.chunks[i].offScreen() == "lateral-r") {
+				this.chunks[i].x -= this.noChunks * 2;
+				this.chunks[i].init(this.images);
+				if(this.chunks[i].offScreen()) {
+					break;
+				}
+		} else if(this.chunks[i].offScreen() == "vertical-u") {
+
+				this.chunks[i].y += this.noChunks * 2;
+				this.chunks[i].init(this.images);
+				if(this.chunks[i].offScreen()) {
+					break;
+				}
+		} else if(this.chunks[i].offScreen() == "vertical-d") {
+
+				this.chunks[i].y -= this.noChunks * 2;
+				this.chunks[i].init(this.images);
+				if(this.chunks[i].offScreen()) {
+					break;
+				}
+		}
+	}
 
 }
 

@@ -34,24 +34,24 @@ World.prototype.init = function(images) {
 }
 
 World.prototype.manageChunks = function() {
-	var remove = this.checkRemove();
-	var add = [];
-	if(remove.length == 0) return true;
-	//Calculate where to add chunks
-	for(var i = 0; i < remove.length; i++) {
-		var oldChunk = this.chunks[remove[i]];
-		var newChunk = new Chunk(-oldChunk.x - oldChunk.offsetX, -oldChunk.y - oldChunk.offsetY, 8, 8, this.noiseGen);
-		newChunk.init(this.images);
-		add[i] = newChunk;
-	}
-	//Swap them out
-	for(var i = 0; i < this.chunks.length; i++) {
-		for(var j = 0; j < remove.length; j++) {
-			if(i == remove[j]) {
-				this.chunks[i] = add[j];
-			}
-		}
-	}
+	// var remove = this.checkRemove();
+	// var add = [];
+	// if(remove.length == 0) return true;
+	// //Calculate where to add chunks
+	// for(var i = 0; i < remove.length; i++) {
+	// 	var oldChunk = this.chunks[remove[i]];
+	// 	var newChunk = new Chunk(-oldChunk.x + 1, -oldChunk.y, 8, 8, this.noiseGen);
+	// 	newChunk.init(this.images);
+	// 	add[i] = newChunk;
+	// }
+	// //Swap them out
+	// for(var i = 0; i < this.chunks.length; i++) {
+	// 	for(var j = 0; j < remove.length; j++) {
+	// 		if(i == remove[j]) {
+	// 			this.chunks[i] = add[j];
+	// 		}
+	// 	}
+	// }
 
 }
 
@@ -59,9 +59,9 @@ World.prototype.render = function(display) {
 	// Slam the tiles onto the screen
 
 	for(var i = 0; i < this.count; i++) {
-		if(!this.chunks[i].offScreen()) {
+		//if(!this.chunks[i].offScreen()) {
 			this.chunks[i].render(display);
-		}
+		//}
 	}
 }
 	

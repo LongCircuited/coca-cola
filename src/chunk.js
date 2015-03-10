@@ -40,7 +40,7 @@ Chunk.prototype.render = function(display) {
 		
 	}
 	
-	display.fillText("CHUNK: " + this.x + ", " + this.y, this.x * 8 * this.TILE_WIDTH + 20 + this.offsetX, this.y * 8 *  this.TILE_HEIGHT + 20 + this.offsetY);
+	//display.fillText("CHUNK: " + this.x + ", " + this.y, this.x * 8 * this.TILE_WIDTH + 20 + this.offsetX, this.y * 8 *  this.TILE_HEIGHT + 20 + this.offsetY);
 
 }
 
@@ -101,14 +101,16 @@ Chunk.prototype.genLandscape = function() {
 		this.map[x] = [];
 		for(var y = 0; y < this.height; y++) {
 			var cc = this.getWorldCoord(x, y);
-			if(this.noiseGen.noise(cc[0]/16, cc[1]/16) > 0.5) {
+			var worldX = cc[0];
+			var worldY = cc[1];
+			var r = 25;
+			if(this.noiseGen.noise(worldX/r, worldY/r) > 0.3) {
 				this.map[x][y] = 1;
-			} else if(this.noiseGen.noise(cc[0]/16, cc[1]/16) > 0.001) {
+			} else if(this.noiseGen.noise(worldX/r, worldY/r) > 0.001) {
 				this.map[x][y] = 2;
 			} else {
 				this.map[x][y] = 0;
 			}
-			
 		}
 	}
 }

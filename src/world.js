@@ -1,11 +1,12 @@
 var tile = require("./tile");
 var noise = require("./util/noise");
 var Chunk = require("./chunk");
-
+var Minimap = require("./minimap");
 
 function World() {
 	this.map = [];
 	this.noiseGen = new noise();
+	this.minimap = null;
  	this.TILE_WIDTH = 64;
  	this.TILE_HEIGHT = 64;
  	this.offsetX = 40;
@@ -32,28 +33,10 @@ World.prototype.init = function(images) {
 			this.chunks[this.count - 1].init(images);
 		}
 	}
+	this.minimap = new Minimap(this.chunks);
 }
 
 World.prototype.manageChunks = function() {
-	// var remove = this.checkRemove();
-	// var add = [];
-	// if(remove.length == 0) return true;
-	// //Calculate where to add chunks
-	// for(var i = 0; i < remove.length; i++) {
-	// 	var oldChunk = this.chunks[remove[i]];
-	// 	var newChunk = new Chunk(-oldChunk.x + 1, -oldChunk.y, 8, 8, this.noiseGen);
-	// 	newChunk.init(this.images);
-	// 	add[i] = newChunk;
-	// }
-	// //Swap them out
-	// for(var i = 0; i < this.chunks.length; i++) {
-	// 	for(var j = 0; j < remove.length; j++) {
-	// 		if(i == remove[j]) {
-	// 			this.chunks[i] = add[j];
-	// 		}
-	// 	}
-	// }
-
 	for(var i = 0; i < this.count; i++) {
 		var chunk = this.chunks[i];
 		if(chunk.offScreen() == "lateral-l") {
@@ -69,14 +52,12 @@ World.prototype.manageChunks = function() {
 					break;
 				}
 		} else if(chunk.offScreen() == "vertical-u") {
-
 				chunk.y += this.noChunks * 2;
 				chunk.init(this.images);
 				if(chunk.offScreen()) {
 					break;
 				}
 		} else if(chunk.offScreen() == "vertical-d") {
-
 				chunk.y -= this.noChunks * 2;
 				chunk.init(this.images);
 				if(chunk.offScreen()) {
@@ -94,6 +75,8 @@ World.prototype.render = function(display) {
 			this.chunks[i].render(display);
 		}
 	}
+	this.minimap.update(this.offsetX, this.offsetY, this.noiseGen);
+	this.minimap.render(display);
 }
 	
 World.prototype.checkRemove = function() {
@@ -129,10 +112,10 @@ World.prototype.move = function(dir, player, del) {
 	else if (83 in dir && ++kpc) nY-=dy; 
 	if      (65 in dir && ++kpc) nX+=dx; 
 	else if (68 in dir && ++kpc) nX-=dx; 
-	if(this.checkMove(player.x - nX, player.y - this.offsetY)) {
+	if(this.checkMove(player.x - nX, player.y - this.offsetY)[0]) {
 		this.shift(nX, this.offsetY)
 	}
-	if(this.checkMove(player.x - this.offsetX, player.y - nY)) {
+	if(this.checkMove(player.x - this.offsetX, player.y - nY)[0]) {
 		this.shift(this.offsetX, nY)
 	}
 }
@@ -153,12 +136,14 @@ try {
 } catch(e) {
 
 }
-	return collision;
+
+	//Return whether it's a collision and also the type of tile colliding with
+	return [collision, this.getTile(Math.round(x / this.TILE_WIDTH), Math.round(y / this.TILE_HEIGHT))];
 }
 
 
 World.prototype.collideable = function(tId) {
-	if(tId == 0) {
+	if(tId == 0 || tId == 2) {
 		return false;
 	} else {
 		return true;
